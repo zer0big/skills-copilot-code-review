@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mergington High School Activities</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="icon"
@@ -12,13 +18,21 @@
     />
   </head>
   <body>
-    <div class="announcement-banner">
-      📢 Activity registration is open until the end of the month. Don't lose your spot!
+    <div class="announcement-banner" role="status" aria-live="polite">
+      <div class="announcement-banner-inner">
+        <span class="announcement-pill">Announcements</span>
+        <div id="announcement-banner-content">Loading current announcements...</div>
+      </div>
     </div>
+
     <header>
       <h1>Mergington High School</h1>
       <h2>Extracurricular Activities</h2>
       <div id="user-controls">
+        <button id="manage-announcements-button" class="icon-button" aria-label="Open announcement dialog">
+          <span aria-hidden="true">📣</span>
+          <span>Announcements</span>
+        </button>
         <div id="user-status">
           <button id="login-button" class="icon-button">
             <span class="user-icon">👤</span>
@@ -100,6 +114,44 @@
     <footer>
       <p>&copy; 2023 Mergington High School</p>
     </footer>
+
+    <div id="announcements-modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-content announcement-modal-content" role="dialog" aria-modal="true" aria-label="Announcement management dialog">
+        <span class="close-announcements-modal" aria-label="Close announcement dialog">&times;</span>
+        <h3>Announcements</h3>
+        <p id="announcements-help-text" class="modal-help-text">
+          View all notices. Log in to create, edit, or delete announcements.
+        </p>
+
+        <div id="announcement-list" class="announcement-list"></div>
+
+        <form id="announcement-form" class="announcement-form hidden">
+          <input type="hidden" id="announcement-id" />
+          <div class="form-group">
+            <label for="announcement-title">Title</label>
+            <input id="announcement-title" type="text" maxlength="120" required placeholder="e.g., Sports Day Schedule Update" />
+          </div>
+          <div class="form-group">
+            <label for="announcement-message">Message</label>
+            <textarea id="announcement-message" rows="4" maxlength="2000" required placeholder="Add details that students and teachers should know."></textarea>
+          </div>
+          <div class="announcement-dates">
+            <div class="form-group">
+              <label for="announcement-start-date">Start Date (Optional)</label>
+              <input id="announcement-start-date" type="date" />
+            </div>
+            <div class="form-group">
+              <label for="announcement-end-date">End Date (Required)</label>
+              <input id="announcement-end-date" type="date" required />
+            </div>
+          </div>
+          <div class="announcement-form-actions">
+            <button type="button" id="announcement-form-reset" class="ghost-button">Clear</button>
+            <button type="submit" id="announcement-form-submit">Save Announcement</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- Registration Modal -->
     <div id="registration-modal" class="modal hidden">
